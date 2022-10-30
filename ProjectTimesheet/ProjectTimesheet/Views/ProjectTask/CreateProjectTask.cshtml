@@ -1,0 +1,74 @@
+﻿@model ProjectTimesheet.Models.ProjectTaskModel
+
+@{
+    ViewData["Title"] = "CreateProjectTask";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>CreateProjectTask</h1>
+
+<h4>ProjectTaskModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*            <div class="form-group">
+                <label asp-for="IdTask" class="control-label"></label>
+                <input asp-for="IdTask" class="form-control" />
+                <span asp-validation-for="IdTask" class="text-danger"></span>
+            </div>
+*@            <div class="form-group">
+                <label asp-for="IdEmployee" class="control-label"></label>
+@*                <input asp-for="IdEmployee" class="form-control" />
+                <span asp-validation-for="IdEmployee" class="text-danger"></span>
+*@            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartDate" class="control-label"></label>
+                <input asp-for="StartDate" class="form-control" />
+                <span asp-validation-for="StartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndDate" class="control-label"></label>
+                <input asp-for="EndDate" class="form-control" />
+                <span asp-validation-for="EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdProject" class="control-label"></label>
+@*                <input asp-for="IdProject" class="form-control" />
+                <span asp-validation-for="IdProject" class="text-danger"></span>
+*@            </div>
+            <div class="form-group">
+                <label asp-for="IdTaskType" class="control-label"></label>
+@*                <input asp-for="IdTaskType" class="form-control" />
+                <span asp-validation-for="IdTaskType" class="text-danger"></span>
+*@            </div>
+            <div class="form-group">
+                <label asp-for="IsApproved" class="control-label"></label>
+                <input asp-for="IsApproved" class="form-control" />
+                <span asp-validation-for="IsApproved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
