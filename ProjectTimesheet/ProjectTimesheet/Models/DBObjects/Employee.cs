@@ -13,7 +13,7 @@ namespace ProjectTimesheet.Models.DBObjects
         public Guid IdEmployee { get; set; }
         public string LastName { get; set; } = null!;
         public string FirstName { get; set; } = null!;
-        public string Role { get; set; } 
+        public string Role { get; set; } = null!;
         public string? Department { get; set; }
 
         public virtual ICollection<ProjectTask> ProjectTasks { get; set; }

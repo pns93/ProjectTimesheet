@@ -9,7 +9,6 @@ namespace ProjectTimesheet.Data
 {
     public partial class ApplicationDbContext : IdentityDbContext
     {
-        
         public ApplicationDbContext()
         {
         }
@@ -42,7 +41,6 @@ namespace ProjectTimesheet.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
             //modelBuilder.Entity<AspNetRole>(entity =>
             //{
             //    entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
+using System.Data;
 
 namespace ProjectTimesheet.Controllers
 {
@@ -86,6 +88,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectTaskController/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Delete(Guid id)
         {
             var model = projectTaskRepository.GetProjectTaskById(id);
