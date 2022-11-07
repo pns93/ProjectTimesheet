@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
+using ProjectTimesheet.ViewModel;
+using System.Collections.Generic;
 using System.Data;
 
 namespace ProjectTimesheet.Controllers
@@ -11,28 +14,52 @@ namespace ProjectTimesheet.Controllers
     public class ProjectTaskController : Controller
     {
         private ProjectTaskRepository projectTaskRepository;
+        private EmployeeRepository employeeRepository;
+        private ProjectRepository projectRepository;
+        private TaskTypeRepository taskTypeRepository;
+
         public ProjectTaskController(ApplicationDbContext dbcontext)
         {
             projectTaskRepository = new ProjectTaskRepository(dbcontext);
+            employeeRepository = new EmployeeRepository(dbcontext);
+            projectRepository = new ProjectRepository(dbcontext);
+            taskTypeRepository = new TaskTypeRepository(dbcontext);
+
         }
         // GET: ProjectTaskController
         public ActionResult Index()
         {
             var list = projectTaskRepository.GetAllProjectTasks();
-            return View(list);
+            var viewModelList = new List<ProjectTaskViewModel>();
+            foreach (var projectTask in list)
+            {
+                viewModelList.Add(new ProjectTaskViewModel(projectTask, employeeRepository, projectRepository, taskTypeRepository));
+
+            }
+            return View(viewModelList);
+
         }
 
         // GET: ProjectTaskController/Details/5
         public ActionResult Details(Guid id)
         {
             var model = projectTaskRepository.GetProjectTaskById(id);
+
             return View("DetailsProjectTask", model);
         }
 
         // GET: ProjectTaskController/Create
         public ActionResult Create()
         {
-            return View("CreateProjectTask");
+            var employees = employeeRepository.GetAllEmployees();
+            var projects = projectRepository.GetAllProjects();
+            var taskTypes = taskTypeRepository.GetAllTaskTypes();
+            ViewBag.EmployeeList = employees.Select(x => new SelectListItem(String.Concat(x.FirstName, " ", x.LastName), x.IdEmployee.ToString()));
+            ViewBag.ProjectList = projects.Select(x => new SelectListItem(x.Name, x.IdProject.ToString()));
+            ViewBag.TaskTypeList = taskTypes.Select(x => new SelectListItem(x.Name, x.IdTaskType.ToString()));
+            var viewModel = new ProjectTaskViewModel(new ProjectTaskModel(), employeeRepository, projectRepository, taskTypeRepository);
+
+            return View("CreateProjectTask",viewModel);
         }
 
         // POST: ProjectTaskController/Create
@@ -61,7 +88,8 @@ namespace ProjectTimesheet.Controllers
         public ActionResult Edit(Guid id)
         {
             var model = projectTaskRepository.GetProjectTaskById(id);
-            return View("EditProjectTask", model);
+            var viewModelList = new ProjectTaskViewModel(model,employeeRepository,projectRepository,taskTypeRepository);
+            return View("EditProjectTask", viewModelList);
         }
 
         // POST: ProjectTaskController/Edit/5

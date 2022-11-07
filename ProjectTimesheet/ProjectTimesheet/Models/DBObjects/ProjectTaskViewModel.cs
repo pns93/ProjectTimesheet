@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ProjectTimesheet.Models.DBObjects
+﻿namespace ProjectTimesheet.Models.DBObjects
 {
-    public partial class ProjectTask
+    public class ProjectTaskViewModel
     {
         public Guid IdTask { get; set; }
         public Guid IdEmployee { get; set; }
@@ -14,9 +11,5 @@ namespace ProjectTimesheet.Models.DBObjects
         public Guid IdProject { get; set; }
         public Guid IdTaskType { get; set; }
         public bool IsApproved { get; set; }
-
-        public virtual Employee IdEmployeeNavigation { get; set; } = null!;
-        public virtual Project IdProjectNavigation { get; set; } = null!;
-        public virtual TaskType IdTaskTypeNavigation { get; set; } = null!;
     }
 }

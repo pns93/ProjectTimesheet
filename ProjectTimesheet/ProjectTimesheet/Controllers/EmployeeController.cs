@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
 
 namespace ProjectTimesheet.Controllers
 {
-    [Authorize(Roles = "User")]
+    [Authorize(Roles = "User,Admin")]
 
     public class EmployeeController : Controller
     {
@@ -35,6 +36,7 @@ namespace ProjectTimesheet.Controllers
         // GET: EmployeeController/Create
         public ActionResult Create()
         {
+
             return View("CreateEmployee");
         }
 

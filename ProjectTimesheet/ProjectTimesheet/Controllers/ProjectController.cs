@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
@@ -9,15 +10,19 @@ namespace ProjectTimesheet.Controllers
     public class ProjectController : Controller
     {
         private ProjectRepository projectRepository;
+        private ProjectManagerRepository projectManagerRepository;
         public ProjectController(ApplicationDbContext dbcontext)
         {
             projectRepository = new ProjectRepository(dbcontext);
+            projectManagerRepository = new ProjectManagerRepository(dbcontext);
+
         }
 
         // GET: ProjectController
         public ActionResult Index()
         {
             var list = projectRepository.GetAllProjects();
+
             return View(list);
         }
 
@@ -31,6 +36,9 @@ namespace ProjectTimesheet.Controllers
         // GET: ProjectController/Create
         public ActionResult Create()
         {
+            var projectManagers = projectManagerRepository.GetAllProjectManagers();
+            ViewBag.ProjectManagerList = projectManagers.Select(x => new SelectListItem(x.Name, x.IdPm.ToString()));
+
             return View("CreateProject");
         }
 

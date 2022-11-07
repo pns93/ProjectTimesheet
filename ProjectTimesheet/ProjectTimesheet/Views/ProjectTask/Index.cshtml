@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectTimesheet.Models.ProjectTaskModel>
+﻿@model IEnumerable<ProjectTimesheet.ViewModel.ProjectTaskViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,10 +16,10 @@
 @*            <th>
                 @Html.DisplayNameFor(model => model.IdTask)
             </th>
-*@            <th>
+            <th>
                 @Html.DisplayNameFor(model => model.IdEmployee)
             </th>
-            <th>
+*@            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -31,14 +31,23 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.IdProject)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdTaskType)
             </th>
-            <th>
+*@            <th>
                 @Html.DisplayNameFor(model => model.IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProjectName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TaskTypeName)
             </th>
             <th></th>
         </tr>
@@ -49,10 +58,10 @@
 @*            <td>
                 @Html.DisplayFor(modelItem => item.IdTask)
             </td>
-*@            <td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IdEmployee)
             </td>
-            <td>
+*@            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
@@ -64,19 +73,28 @@
             <td>
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.IdProject)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IdTaskType)
             </td>
-            <td>
+*@            <td>
                 @Html.DisplayFor(modelItem => item.IsApproved)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.IdTask  }) |
-                    @Html.ActionLink("Details", "Details", new {  id=item.IdTask  }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdTask  })
+                @Html.DisplayFor(modelItem => item.EmployeeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProjectName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TaskTypeName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.IdTask }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.IdTask }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.IdTask })
             </td>
         </tr>
 }

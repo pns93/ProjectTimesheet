@@ -12,6 +12,7 @@ namespace ProjectTimesheet.Controllers
         public ProjectManagerController(ApplicationDbContext dbcontext)
         {
             projectManagerRepository = new ProjectManagerRepository(dbcontext);
+
         }
         // GET: ProjectManager
         public ActionResult Index()

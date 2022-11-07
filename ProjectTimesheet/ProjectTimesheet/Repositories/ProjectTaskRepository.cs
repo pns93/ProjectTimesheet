@@ -1,6 +1,7 @@
 ﻿using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Models.DBObjects;
+using ProjectTimesheet.ViewModel;
 
 namespace ProjectTimesheet.Repositories
 {
@@ -30,6 +31,7 @@ namespace ProjectTimesheet.Repositories
                 model.EndDate = dbobject.EndDate;
                 model.IdProject = dbobject.IdProject;
                 model.IsApproved = dbobject.IsApproved;
+                model.IdTaskType = dbobject.IdTaskType;
                 model.IdTaskType = dbobject.IdTaskType;
 
             }

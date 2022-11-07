@@ -9,15 +9,15 @@ namespace ProjectTimesheet.Models
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public DateTime StartDate { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         [DataType(DataType.DateTime)]
         public DateTime EndDate { get; set; }
         public Guid IdProject { get; set; }
         public Guid IdTaskType { get; set; }
-        public bool? IsApproved { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

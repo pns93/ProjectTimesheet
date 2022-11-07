@@ -1,4 +1,4 @@
-﻿@model ProjectTimesheet.Models.ProjectTaskModel
+﻿@model ProjectTimesheet.ViewModel.ProjectTaskViewModel
 
 @{
     ViewData["Title"] = "DetailsProjectTask";
@@ -8,16 +8,16 @@
 <h1>DetailsProjectTask</h1>
 
 <div>
-    <h4>ProjectTaskModel</h4>
+    <h4>ProjectTaskViewModel</h4>
     <hr />
     <dl class="row">
-@*        <dt class = "col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdTask)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IdTask)
         </dd>
-*@        <dt class = "col-sm-2">
+        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.IdEmployee)
         </dt>
         <dd class = "col-sm-10">
@@ -65,9 +65,27 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.IsApproved)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.EmployeeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.EmployeeName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProjectName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProjectName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TaskTypeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TaskTypeName)
+        </dd>
     </dl>
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new {  id = Model.IdTask}) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdTask }) |
     <a asp-action="Index">Back to List</a>
 </div>
