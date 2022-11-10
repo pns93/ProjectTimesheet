@@ -14,16 +14,16 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="IdTask" class="control-label"></label>
-               <input asp-for="IdTask" class="form-control" />
-                <span asp-validation-for="IdTask" class="text-danger"></span>
+                <label asp-for="IdTask" hidden class="control-label"></label>
+               <input asp-for="IdTask" hidden class="form-control" />
+                <span asp-validation-for="IdTask" hidden class="text-danger"></span>
+                </div>
+            <div class="form-group">
+            <label asp-for="IdEmployee" hidden class="control-label"></label>
+            <input asp-for="IdEmployee" hidden class="form-control" />
+            <span asp-validation-for="IdEmployee" hidden class="text-danger"></span>
             </div>
-@*            <div class="form-group">
-                <label asp-for="IdEmployee" class="control-label"></label>
-                <input asp-for="IdEmployee" class="form-control" />
-                <span asp-validation-for="IdEmployee" class="text-danger"></span>
-            </div>
-*@            <div class="form-group">
+            <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
@@ -43,35 +43,41 @@
                 <input asp-for="EndDate" class="form-control" />
                 <span asp-validation-for="EndDate" class="text-danger"></span>
             </div>
-@*            <div class="form-group">
-                <label asp-for="IdProject" class="control-label"></label>
-                <input asp-for="IdProject" class="form-control" />
-                <span asp-validation-for="IdProject" class="text-danger"></span>
+           <div class="form-group">
+            <label asp-for="IdProject" hidden class="control-label"></label>
+            <input asp-for="IdProject" hidden class="form-control" />
+            <span asp-validation-for="IdProject" hidden class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="IdTaskType" class="control-label"></label>
-                <input asp-for="IdTaskType" class="form-control" />
-                <span asp-validation-for="IdTaskType" class="text-danger"></span>
+            <label asp-for="IdTaskType" hidden class="control-label"></label>
+            <input asp-for="IdTaskType" hidden class="form-control" />
+            <span asp-validation-for="IdTaskType" hidden class="text-danger"></span>
             </div>
-*@           <div class="form-group form-check">
+          <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="IsApproved" /> @Html.DisplayNameFor(model => model.IsApproved)
                 </label>
             </div>
             <div class="form-group">
                 <label asp-for="EmployeeName" class="control-label"></label>
-                <input asp-for="EmployeeName" class="form-control" />
+                @*                <input asp-for="EmployeeName" class="form-control" />
                 <span asp-validation-for="EmployeeName" class="text-danger"></span>
+                *@              @Html.DropDownList("EmployeeName", new SelectList(ViewBag.EmployeeList, "Value", "Text"), "", new{})
+
             </div>
             <div class="form-group">
                 <label asp-for="ProjectName" class="control-label"></label>
-                <input asp-for="ProjectName" class="form-control" />
+                @*                <input asp-for="ProjectName" class="form-control" />
                 <span asp-validation-for="ProjectName" class="text-danger"></span>
+                *@@Html.DropDownList("ProjectName", new SelectList(ViewBag.ProjectList, "Value", "Text"), "", new{})
+
             </div>
             <div class="form-group">
                 <label asp-for="TaskTypeName" class="control-label"></label>
-                <input asp-for="TaskTypeName" class="form-control" />
+                @*                <input asp-for="TaskTypeName" class="form-control" />
                 <span asp-validation-for="TaskTypeName" class="text-danger"></span>
+                *@             @Html.DropDownList("TaskTypeName", new SelectList(ViewBag.ProjectList, "Value", "Text"), "", new{})
+
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -85,5 +91,8 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+

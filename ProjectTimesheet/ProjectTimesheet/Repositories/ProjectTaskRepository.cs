@@ -89,6 +89,7 @@ namespace ProjectTimesheet.Repositories
                 dbobject.IdProject = model.IdProject;
                 dbobject.IsApproved = model.IsApproved;
                 dbobject.IdTaskType = model.IdTaskType;
+
                 _DBContext.SaveChanges();
             }
         }

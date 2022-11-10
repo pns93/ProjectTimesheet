@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
+using ProjectTimesheet.Models.DBObjects;
 using ProjectTimesheet.Repositories;
 using ProjectTimesheet.ViewModel;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace ProjectTimesheet.Controllers
             taskTypeRepository = new TaskTypeRepository(dbcontext);
 
         }
+
         // GET: ProjectTaskController
         public ActionResult Index()
         {
@@ -44,8 +46,9 @@ namespace ProjectTimesheet.Controllers
         public ActionResult Details(Guid id)
         {
             var model = projectTaskRepository.GetProjectTaskById(id);
+            var viewModel = new ProjectTaskViewModel(model, employeeRepository, projectRepository, taskTypeRepository);
 
-            return View("DetailsProjectTask", model);
+            return View("DetailsProjectTask", viewModel);
         }
 
         // GET: ProjectTaskController/Create
@@ -87,9 +90,13 @@ namespace ProjectTimesheet.Controllers
         // GET: ProjectTaskController/Edit/5
         public ActionResult Edit(Guid id)
         {
+            var employees = employeeRepository.GetAllEmployees();
+            var projects = projectRepository.GetAllProjects();
+            var taskTypes = taskTypeRepository.GetAllTaskTypes();
+
             var model = projectTaskRepository.GetProjectTaskById(id);
-            var viewModelList = new ProjectTaskViewModel(model,employeeRepository,projectRepository,taskTypeRepository);
-            return View("EditProjectTask", viewModelList);
+            var viewModel = new ProjectTaskViewModel(model,employeeRepository,projectRepository,taskTypeRepository);
+            return View("EditProjectTask", viewModel);
         }
 
         // POST: ProjectTaskController/Edit/5
@@ -100,17 +107,19 @@ namespace ProjectTimesheet.Controllers
             try
             {
                 var model = new ProjectTaskModel();
+                //var viewModel = new ProjectTaskViewModel(model, employeeRepository, projectRepository, taskTypeRepository);
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
                 if (task.Result)
                 {
                     projectTaskRepository.UpdateProjectTask(model);
+
                 }
                 return RedirectToAction("Index");
             }
             catch
             {
-                return RedirectToAction("Edit", id);
+                return View("EditProjectTask", id);
             }
 
         }
@@ -121,7 +130,8 @@ namespace ProjectTimesheet.Controllers
         public ActionResult Delete(Guid id)
         {
             var model = projectTaskRepository.GetProjectTaskById(id);
-            return View("DeleteProjectTask", model);
+            var viewModel = new ProjectTaskViewModel(model, employeeRepository, projectRepository, taskTypeRepository);
+            return View("DeleteProjectTask", viewModel);
         }
 
         // POST: ProjectTaskController/Delete/5
@@ -129,9 +139,11 @@ namespace ProjectTimesheet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, IFormCollection collection)
         {
+            var model = new ProjectTaskModel();
             try
             {   
                 projectTaskRepository.DeleteProjectTask(id);
+
                 return RedirectToAction("Index");
             }
             catch
