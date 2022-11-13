@@ -27,7 +27,6 @@ namespace ProjectTimesheet.Controllers
             taskTypeRepository = new TaskTypeRepository(dbcontext);
 
         }
-
         // GET: ProjectTaskController
         public ActionResult Index()
         {
@@ -54,13 +53,15 @@ namespace ProjectTimesheet.Controllers
         // GET: ProjectTaskController/Create
         public ActionResult Create()
         {
+
             var employees = employeeRepository.GetAllEmployees();
             var projects = projectRepository.GetAllProjects();
             var taskTypes = taskTypeRepository.GetAllTaskTypes();
             ViewBag.EmployeeList = employees.Select(x => new SelectListItem(String.Concat(x.FirstName, " ", x.LastName), x.IdEmployee.ToString()));
             ViewBag.ProjectList = projects.Select(x => new SelectListItem(x.Name, x.IdProject.ToString()));
             ViewBag.TaskTypeList = taskTypes.Select(x => new SelectListItem(x.Name, x.IdTaskType.ToString()));
-            var viewModel = new ProjectTaskViewModel(new ProjectTaskModel(), employeeRepository, projectRepository, taskTypeRepository);
+            var model = new ProjectTaskModel();
+            var viewModel = new ProjectTaskViewModel(model, employeeRepository, projectRepository, taskTypeRepository);
 
             return View("CreateProjectTask",viewModel);
         }
@@ -93,9 +94,12 @@ namespace ProjectTimesheet.Controllers
             var employees = employeeRepository.GetAllEmployees();
             var projects = projectRepository.GetAllProjects();
             var taskTypes = taskTypeRepository.GetAllTaskTypes();
+            ViewBag.EmployeeList = employees.Select(x => new SelectListItem(String.Concat(x.FirstName, " ", x.LastName), x.IdEmployee.ToString()));
+            ViewBag.ProjectList = projects.Select(x => new SelectListItem(x.Name, x.IdProject.ToString()));
+            ViewBag.TaskTypeList = taskTypes.Select(x => new SelectListItem(x.Name, x.IdTaskType.ToString()));
 
             var model = projectTaskRepository.GetProjectTaskById(id);
-            var viewModel = new ProjectTaskViewModel(model,employeeRepository,projectRepository,taskTypeRepository);
+            var viewModel = new ProjectTaskViewModel(model, employeeRepository, projectRepository, taskTypeRepository);
             return View("EditProjectTask", viewModel);
         }
 
@@ -107,7 +111,6 @@ namespace ProjectTimesheet.Controllers
             try
             {
                 var model = new ProjectTaskModel();
-                //var viewModel = new ProjectTaskViewModel(model, employeeRepository, projectRepository, taskTypeRepository);
                 var task = TryUpdateModelAsync(model);
                 task.Wait();
                 if (task.Result)

@@ -18,8 +18,8 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IdEmployee)
-            </th>
-*@            <th>
+            </th>*@
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -92,9 +92,9 @@
                 @Html.DisplayFor(modelItem => item.TaskTypeName)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.IdTask }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.IdTask }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdTask })
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdTask }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.IdTask  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.IdTask  })
             </td>
         </tr>
 }
