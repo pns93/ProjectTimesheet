@@ -142,7 +142,7 @@ namespace ProjectTimesheet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Guid id, IFormCollection collection)
         {
-            var model = new ProjectTaskModel();
+            //var model = new ProjectTaskModel();
             try
             {   
                 projectTaskRepository.DeleteProjectTask(id);

@@ -1,4 +1,4 @@
-﻿@model ProjectTimesheet.Models.ProjectModel
+﻿@model ProjectTimesheet.ViewModel.ProjectViewModel
 
 @{
     ViewData["Title"] = "EditProject";
@@ -7,17 +7,17 @@
 
 <h1>EditProject</h1>
 
-<h4>ProjectModel</h4>
+<h4>ProjectViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-@*                <label asp-for="IdProject" class="control-label"></label>
-*@                <input asp-for="IdProject" hidden class="form-control" />
-@*                <span asp-validation-for="IdProject" class="text-danger"></span>
-*@            </div>
+                <label asp-for="IdProject" hidden class="control-label"></label>
+                <input asp-for="IdProject" hidden class="form-control" />
+                <span asp-validation-for="IdProject" hidden class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
@@ -29,11 +29,17 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-@*                <label asp-for="IdPm" class="control-label"></label>
-*@                <input asp-for="IdPm" hidden class="form-control" />
-@*                <span asp-validation-for="IdPm" class="text-danger"></span>
+                <label asp-for="IdPm" class="control-label">Project Manager Name</label>
+                @Html.DropDownList("IdPm", new SelectList(ViewBag.ProjectManagerList, "Value", "Text"), "", new{})
+@*                <input asp-for="IdPm" class="form-control" />
+                <span asp-validation-for="IdPm" class="text-danger"></span>
 *@            </div>
-            <div class="form-group">
+@*            <div class="form-group">
+                <label asp-for="ProjectManagerName" class="control-label"></label>
+                <input asp-for="ProjectManagerName" class="form-control" />
+                <span asp-validation-for="ProjectManagerName" class="text-danger"></span>
+            </div>
+*@            <div class="form-group">
                 <label asp-for="StartDate" class="control-label"></label>
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>

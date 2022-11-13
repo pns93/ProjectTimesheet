@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProjectTimesheet.Models.ProjectModel>
+﻿@model IEnumerable<ProjectTimesheet.ViewModel.ProjectViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -22,8 +22,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
+@*            <th>
                 @Html.DisplayNameFor(model => model.IdPm)
+            </th>
+*@            <th>
+                @Html.DisplayNameFor(model => model.ProjectManagerName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.StartDate)
@@ -46,8 +49,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.IdPm)
+            </td>
+*@            <td>
+                @Html.DisplayFor(modelItem => item.ProjectManagerName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
@@ -56,9 +62,9 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.IdProject  }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.IdProject }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.IdProject })
+                @Html.ActionLink("Edit", "Edit", new { id=item.IdProject }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.IdProject  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.IdProject  })
             </td>
         </tr>
 }

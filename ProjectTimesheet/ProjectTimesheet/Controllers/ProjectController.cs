@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
+using ProjectTimesheet.ViewModel;
+using System.Data;
 
 namespace ProjectTimesheet.Controllers
 {
@@ -22,15 +25,23 @@ namespace ProjectTimesheet.Controllers
         public ActionResult Index()
         {
             var list = projectRepository.GetAllProjects();
+            var viewModelList = new List<ProjectViewModel>();
+            foreach (var project in list)
+            {
+                viewModelList.Add(new ProjectViewModel(project, projectManagerRepository));
 
-            return View(list);
+            }
+            return View(viewModelList);
+
         }
 
         // GET: ProjectController/Details/5
         public ActionResult Details(Guid id)
         {
             var model = projectRepository.GetProjectById(id);
-            return View("DetailsProject", model);
+            var viewModel = new ProjectViewModel(model, projectManagerRepository);
+
+            return View("DetailsProject", viewModel);
         }
 
         // GET: ProjectController/Create
@@ -38,8 +49,10 @@ namespace ProjectTimesheet.Controllers
         {
             var projectManagers = projectManagerRepository.GetAllProjectManagers();
             ViewBag.ProjectManagerList = projectManagers.Select(x => new SelectListItem(x.Name, x.IdPm.ToString()));
+            var model = new ProjectModel();
+            var viewModel = new ProjectViewModel(model, projectManagerRepository);
 
-            return View("CreateProject");
+            return View("CreateProject", viewModel);
         }
 
         // POST: ProjectController/Create
@@ -67,8 +80,13 @@ namespace ProjectTimesheet.Controllers
         // GET: ProjectController/Edit/5
         public ActionResult Edit(Guid id)
         {
+            var projectManagers = projectManagerRepository.GetAllProjectManagers();
+            ViewBag.ProjectManagerList = projectManagers.Select(x => new SelectListItem(x.Name, x.IdPm.ToString()));
+
             var model = projectRepository.GetProjectById(id);
-            return View("EditProject", model);
+            var viewModel = new ProjectViewModel(model, projectManagerRepository);
+
+            return View("EditProject", viewModel);
         }
 
         // POST: ProjectController/Edit/5
@@ -95,10 +113,14 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectController/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Delete(Guid id)
         {
             var model = projectRepository.GetProjectById(id);
-            return View("DeleteProject", model);
+            var viewModel = new ProjectViewModel(model, projectManagerRepository);
+
+            return View("DeleteProject", viewModel);
         }
 
         // POST: ProjectController/Delete/5
