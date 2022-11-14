@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
+using System.Data;
 
 namespace ProjectTimesheet.Controllers
 {
+    [Authorize(Roles = "User,Admin")]
     public class TaskTypeController : Controller
     {
 

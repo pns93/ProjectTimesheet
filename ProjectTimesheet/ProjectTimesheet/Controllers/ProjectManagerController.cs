@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Repositories;
+using System.Data;
 
 namespace ProjectTimesheet.Controllers
 {
+    [Authorize(Roles = "User,Admin")]
     public class ProjectManagerController : Controller
     {
         private ProjectManagerRepository projectManagerRepository;
@@ -20,7 +23,6 @@ namespace ProjectTimesheet.Controllers
             var list = projectManagerRepository.GetAllProjectManagers();
             return View(list);
         }
-
         // GET: ProjectManager/Details/5
         public ActionResult Details(Guid id)
         {

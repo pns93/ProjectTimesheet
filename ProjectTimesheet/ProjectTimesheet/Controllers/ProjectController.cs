@@ -10,6 +10,7 @@ using System.Data;
 
 namespace ProjectTimesheet.Controllers
 {
+    [Authorize(Roles = "User,Admin")]
     public class ProjectController : Controller
     {
         private ProjectRepository projectRepository;
@@ -34,7 +35,7 @@ namespace ProjectTimesheet.Controllers
             return View(viewModelList);
 
         }
-
+        [Authorize(Roles = "User,Admin")]
         // GET: ProjectController/Details/5
         public ActionResult Details(Guid id)
         {

@@ -12,6 +12,7 @@ using System.Data;
 
 namespace ProjectTimesheet.Controllers
 {
+    [Authorize(Roles = "User,Admin")]
     public class ProjectTaskController : Controller
     {
         private ProjectTaskRepository projectTaskRepository;
