@@ -6,6 +6,17 @@
 }
 
 <h1>Index</h1>
+<form asp-action="Index" method="get">
+    <div class="form-group">
+        <label for="SearchString">Search by partial name </label>
+        <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Search" class="btn-primary" />
+
+    </div>
+
+</form>
+<a asp-action="Index">Back to full list</a>
+<hr />
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,14 +24,16 @@
 <table class="table">
     <thead>
         <tr>
-@*            <th>
-                @Html.DisplayNameFor(model => model.IdTask)
+            @*            <th>
+            @Html.DisplayNameFor(model => model.IdTask)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdEmployee)
+            @Html.DisplayNameFor(model => model.IdEmployee)
             </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]">
+                    @Html.DisplayNameFor(model => model.Name)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
@@ -31,13 +44,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
             </th>
-@*            <th>
-                @Html.DisplayNameFor(model => model.IdProject)
+            @*            <th>
+            @Html.DisplayNameFor(model => model.IdProject)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdTaskType)
+            @Html.DisplayNameFor(model => model.IdTaskType)
             </th>
-*@            <th>
+            *@
+            <th>
                 @Html.DisplayNameFor(model => model.IsApproved)
             </th>
             <th>
@@ -53,50 +67,53 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.IdTask)
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*            <td>
+            @Html.DisplayFor(modelItem => item.IdTask)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdEmployee)
+            @Html.DisplayFor(modelItem => item.IdEmployee)
             </td>
-*@            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.IdProject)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTaskType)
-            </td>
-*@            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
+            *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                @*            <td>
+            @Html.DisplayFor(modelItem => item.IdProject)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EmployeeName)
+            @Html.DisplayFor(modelItem => item.IdTaskType)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProjectName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TaskTypeName)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.IdTask }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.IdTask  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.IdTask  })
-            </td>
-        </tr>
-}
+            *@
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsApproved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProjectName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaskTypeName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.IdTask }) |
+                    @Html.ActionLink("Details", "Details", new {  id=item.IdTask  }) |
+                    @Html.ActionLink("Delete", "Delete", new {  id=item.IdTask  })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

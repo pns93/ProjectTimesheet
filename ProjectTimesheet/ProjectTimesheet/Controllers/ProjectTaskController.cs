@@ -29,8 +29,9 @@ namespace ProjectTimesheet.Controllers
 
         }
         // GET: ProjectTaskController
-        public ActionResult Index()
+        public async Task<IActionResult> Index(string SortOrder, string SearchString)
         {
+            var model = new ProjectTaskRepository();
             var list = projectTaskRepository.GetAllProjectTasks();
             var viewModelList = new List<ProjectTaskViewModel>();
             foreach (var projectTask in list)
@@ -38,9 +39,29 @@ namespace ProjectTimesheet.Controllers
                 viewModelList.Add(new ProjectTaskViewModel(projectTask, employeeRepository, projectRepository, taskTypeRepository));
 
             }
-            return View(viewModelList);
+            //var newViewModelList = viewModelList.Where(x => x.ProjectName.Equals("CRM"));
 
+            //return View(newViewModelList);
+
+            ViewData["CurrentFilter"] = SearchString;
+            var projectTasks = from x in viewModelList select x;
+            if (!String.IsNullOrEmpty(SearchString))
+            {
+                projectTasks = projectTasks.Where(x => x.Name.Contains(SearchString));
+            }
+
+            //projectTasks = projectTasks.OrderBy(b=>b.Name);
+            ViewData["NameSortParam"] = String.IsNullOrEmpty(SortOrder) ? "name_sort" : "";
+            switch (SortOrder)
+            {
+                case "name_sort":
+                default:
+                    projectTasks = projectTasks.OrderBy(b => b.Name);
+                    break;
+            }
+            return View(projectTasks);
         }
+
 
         // GET: ProjectTaskController/Details/5
         public ActionResult Details(Guid id)
