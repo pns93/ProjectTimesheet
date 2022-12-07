@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Project</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -62,9 +62,18 @@
                 @Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.IdProject }) |
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        @Html.ActionLink("Edit", "Edit", new { id=item.IdProject })
+                    }
+                    |
+
                 @Html.ActionLink("Details", "Details", new {  id=item.IdProject  }) |
+                    @if (User.IsInRole("Admin"))
+                    {
                 @Html.ActionLink("Delete", "Delete", new {  id=item.IdProject  })
+                    }
             </td>
         </tr>
 }

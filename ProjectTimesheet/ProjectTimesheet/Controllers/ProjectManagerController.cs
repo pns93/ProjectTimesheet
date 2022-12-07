@@ -31,6 +31,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectManager/Create
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Create()
         {
             return View("CreateProjectManager");
@@ -59,6 +61,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectManager/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Edit(Guid id)
         {
             var model = projectManagerRepository.GetProjectManagerById(id);
@@ -87,9 +91,11 @@ namespace ProjectTimesheet.Controllers
             }
 
         }
-    
+
 
         // GET: ProjectManager/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Delete(Guid id)
         {
             var model = projectManagerRepository.GetProjectManagerById(id);

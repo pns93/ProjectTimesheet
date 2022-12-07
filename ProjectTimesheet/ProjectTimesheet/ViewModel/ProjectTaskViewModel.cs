@@ -44,8 +44,6 @@ namespace ProjectTimesheet.ViewModel
             this.EmployeeName = String.Concat(employee.FirstName," ",employee.LastName);
             this.ProjectName = project.Name;
             this.TaskTypeName = taskType.Name;
-
-
         }
     }
 }

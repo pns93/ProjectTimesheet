@@ -34,6 +34,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: EmployeeController/Create
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Create()
         {
 
@@ -63,6 +65,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: EmployeeController/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Edit(Guid id)
         {
             var model = employeeRepository.GetEmployeeById(id);
@@ -93,6 +97,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: EmployeeController/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Delete(Guid id)
         {
             var model = employeeRepository.GetEmployeeById(id);

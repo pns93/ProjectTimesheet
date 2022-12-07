@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Project Task</h1>
 <form asp-action="Index" method="get">
     <div class="form-group">
-        <label for="SearchString">Search by partial name </label>
+        <label for="SearchString">Search by Project </label>
         <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
         <input type="submit" value="Search" class="btn-primary" />
 
@@ -39,7 +39,9 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParam"]">
                 @Html.DisplayNameFor(model => model.StartDate)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EndDate)
@@ -55,10 +57,14 @@
                 @Html.DisplayNameFor(model => model.IsApproved)
             </th>
             <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["EmployeeSortParam"]">
                 @Html.DisplayNameFor(model => model.EmployeeName)
+                </a>
             </th>
             <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ProjectSortParam"]">
                 @Html.DisplayNameFor(model => model.ProjectName)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TaskTypeName)
@@ -109,9 +115,17 @@
                     @Html.DisplayFor(modelItem => item.TaskTypeName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.IdTask }) |
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        @Html.ActionLink("Edit", "Edit", new { id=item.IdTask })
+                    }
+                    |
                     @Html.ActionLink("Details", "Details", new {  id=item.IdTask  }) |
-                    @Html.ActionLink("Delete", "Delete", new {  id=item.IdTask  })
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", new {  id=item.IdTask  })
+                    }
                 </td>
             </tr>
         }

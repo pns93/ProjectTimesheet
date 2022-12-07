@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Data.SqlClient;
 using ProjectTimesheet.Data;
 using ProjectTimesheet.Models;
 using ProjectTimesheet.Models.DBObjects;
@@ -19,14 +20,12 @@ namespace ProjectTimesheet.Controllers
         private EmployeeRepository employeeRepository;
         private ProjectRepository projectRepository;
         private TaskTypeRepository taskTypeRepository;
-
         public ProjectTaskController(ApplicationDbContext dbcontext)
         {
             projectTaskRepository = new ProjectTaskRepository(dbcontext);
             employeeRepository = new EmployeeRepository(dbcontext);
             projectRepository = new ProjectRepository(dbcontext);
             taskTypeRepository = new TaskTypeRepository(dbcontext);
-
         }
         // GET: ProjectTaskController
         public async Task<IActionResult> Index(string SortOrder, string SearchString)
@@ -37,26 +36,42 @@ namespace ProjectTimesheet.Controllers
             foreach (var projectTask in list)
             {
                 viewModelList.Add(new ProjectTaskViewModel(projectTask, employeeRepository, projectRepository, taskTypeRepository));
-
             }
-            //var newViewModelList = viewModelList.Where(x => x.ProjectName.Equals("CRM"));
-
-            //return View(newViewModelList);
-
             ViewData["CurrentFilter"] = SearchString;
             var projectTasks = from x in viewModelList select x;
             if (!String.IsNullOrEmpty(SearchString))
             {
-                projectTasks = projectTasks.Where(x => x.Name.Contains(SearchString));
+                projectTasks = projectTasks.Where(x => x.ProjectName.Contains(SearchString));
             }
-
-            //projectTasks = projectTasks.OrderBy(b=>b.Name);
-            ViewData["NameSortParam"] = String.IsNullOrEmpty(SortOrder) ? "name_sort" : "";
+            ViewData["NameSortParam"] = SortOrder == "Name" ? "name_sort" : "Name";
+            ViewData["DateSortParam"] = SortOrder == "Date" ? "date_sort" : "Date";
+            ViewData["EmployeeSortParam"] = SortOrder == "EmployeeName" ? "employee_sort" : "EmployeeName";
+            ViewData["ProjectSortParam"] = SortOrder == "ProjectName" ? "project_sort" : "ProjectName";
             switch (SortOrder)
             {
+                case "Name":
+                    projectTasks = projectTasks.OrderBy(x => x.Name);
+                    break;
                 case "name_sort":
-                default:
-                    projectTasks = projectTasks.OrderBy(b => b.Name);
+                    projectTasks = projectTasks.OrderByDescending(x => x.Name);
+                    break;
+                case "EmployeeName":
+                    projectTasks = projectTasks.OrderBy(x => x.EmployeeName);
+                    break;
+                case "employee_sort":
+                    projectTasks = projectTasks.OrderByDescending(x => x.EmployeeName);
+                    break;
+                case "Date":
+                    projectTasks = projectTasks.OrderBy(x => x.StartDate);
+                    break;
+                case "date_sort":
+                    projectTasks = projectTasks.OrderByDescending(x => x.StartDate);
+                    break;
+                case "ProjectName":
+                    projectTasks = projectTasks.OrderBy(x => x.ProjectName);
+                    break;
+                case "project_sort":
+                    projectTasks = projectTasks.OrderByDescending(x => x.ProjectName);
                     break;
             }
             return View(projectTasks);
@@ -73,6 +88,7 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectTaskController/Create
+
         public ActionResult Create()
         {
 

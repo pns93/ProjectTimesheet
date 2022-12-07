@@ -32,6 +32,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: TaskTypeController/Create
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Create()
         {
             return View("CreateTaskType");
@@ -90,6 +92,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: TaskTypeController/Delete/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Delete(Guid id)
         {
             var model = taskTypeRepository.GetTaskTypeById(id);

@@ -46,6 +46,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectController/Create
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Create()
         {
             var projectManagers = projectManagerRepository.GetAllProjectManagers();
@@ -79,6 +81,8 @@ namespace ProjectTimesheet.Controllers
         }
 
         // GET: ProjectController/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public ActionResult Edit(Guid id)
         {
             var projectManagers = projectManagerRepository.GetAllProjectManagers();
